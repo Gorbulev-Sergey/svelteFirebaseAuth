@@ -1,13 +1,13 @@
+import { User, type IUser } from './IUser';
+
 export interface ILike {
 	created: number;
-	userUid?: string;
-	userName?: string;
+	user: IUser;
 }
 
-export function Like(created: number = Date.now(), userUid?: string, userName?: string) {
+export function Like(created = Date.now(), user = User()): ILike {
 	return {
 		created,
-		userUid,
-		userName
+		user
 	};
 }

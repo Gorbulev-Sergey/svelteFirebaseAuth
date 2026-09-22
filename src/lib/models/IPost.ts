@@ -1,31 +1,29 @@
 import type { IComment } from './IComment';
 import type { ILike } from './ILike';
+import { User, type IUser } from './IUser';
 
 export interface IPost {
 	title: string;
+	content?: string | null;
 	created: number;
-	content: string | null;
-	userUid: string | null;
-	userName: string | null;
+	user: IUser;
 	comments: Record<string, IComment>;
 	likes: Record<string, ILike>;
 }
 
 export function Post(
-	title: string = '',
-	created: number = Date.now(),
-	content: string | null,
-	comments: Record<string, IComment> = {},
-	likes: Record<string, ILike> = {},
-	userUid: string | null,
-	userName: string | null
+	title = '',
+	content = null,
+	created = Date.now(),
+	user = User(),
+	comments = {},
+	likes = {}
 ): IPost {
 	return {
 		title,
 		content,
 		created,
-		userUid,
-		userName,
+		user,
 		comments,
 		likes
 	};

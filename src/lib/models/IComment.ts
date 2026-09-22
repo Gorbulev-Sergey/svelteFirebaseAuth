@@ -1,20 +1,15 @@
+import { User, type IUser } from './IUser';
+
 export interface IComment {
 	text: string;
 	created: number;
-	userUid?: string;
-	userName?: string;
+	user: IUser;
 }
 
-export function Comment(
-	text: string = '',
-	created: number = Date.now(),
-	userUid?: string,
-	userName?: string
-) {
+export function Comment(text = '', created = Date.now(), user = User()): IComment {
 	return {
 		text,
 		created,
-		userUid,
-		userName
+		user
 	};
 }

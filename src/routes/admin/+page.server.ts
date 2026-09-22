@@ -2,7 +2,7 @@ import { adminAuth } from '$lib/db/firebase-admin';
 import { redirect, type Actions } from '@sveltejs/kit';
 
 export async function load({ locals }) {
-	if (!locals.user) redirect(301, '/');
+	if (locals.user?.role != 'admin') redirect(301, '/');
 }
 
 export const actions: Actions = {

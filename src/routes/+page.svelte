@@ -40,8 +40,8 @@
 					onclick={async () => {
 						if (newPost.title.trim() != '') {
 							newPost.created = Date.now();
-							newPost.userUid = data.user?.uid;
-							newPost.userName = data.user?.name;
+							newPost.user.uid = data.user?.uid;
+							newPost.user.name = data.user?.name;
 							push(ref(db, '/posts'), newPost).then((_) => (newPost = Post()));
 						}
 					}}>Создать пост</button
@@ -57,7 +57,7 @@
 					<b>{i + 1}</b>.
 					{post.title},
 					{new Date(post.created).toLocaleDateString()}
-					{post.userName ? ', автор: ' : ''}<b>{post.userName}</b>
+					{post.user?.name ? ', автор: ' : ''}<b>{post.user?.name}</b>
 					<button class="btn btn-sm btn-light text-dark" onclick={() => (selectedPost = uid)}>
 						<span>комментарии</span>
 						<b class="badge bg-dark text-light rounded-1 px-1"
@@ -69,14 +69,14 @@
 						onclick={() => {
 							if (data.user) {
 								let l = post.likes
-									? Object.entries(post.likes).find((l) => l[1].userUid == data.user?.uid)
+									? Object.entries(post.likes).find((l) => l[1].user.uid == data.user?.uid)
 									: undefined;
 								if (l) {
 									remove(ref(db, `/posts/${uid}/likes/${l[0]}`));
 								} else {
 									let newLike = Like();
-									newLike.userUid = data.user?.uid;
-									newLike.userName = data.user?.name;
+									newLike.user.uid = data.user?.uid;
+									newLike.user.name = data.user?.name;
 									push(ref(db, `/posts/${uid}/likes`), newLike);
 								}
 							}
@@ -95,7 +95,7 @@
 								<div>
 									{j + 1}.
 									{com.text}
-									<b class="badge bg-dark text-light">{com.userName}</b>
+									<b class="badge bg-dark text-light">{com.user.name}</b>
 								</div>
 							{/each}
 						{/if}
@@ -107,12 +107,12 @@
 									placeholder="новый комментарий"
 								/>
 								<button
-									class="btn btn-sm btn-light text-dark text-nowrap"
+									class="btn btn-sm btn-dark text-light text-nowrap"
 									onclick={async () => {
 										if (newComment.text.trim() != '') {
 											newComment.created = Date.now();
-											newComment.userUid = data.user?.uid;
-											newComment.userName = data.user?.name;
+											newComment.user.uid = data.user?.uid;
+											newComment.user.name = data.user?.name;
 											push(ref(db, `/posts/${uid}/comments`), newComment).then(
 												(_) => (newComment = Comment())
 											);
