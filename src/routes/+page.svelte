@@ -56,7 +56,11 @@
 				<div class="d-flex align-items-center gap-1">
 					<b>{i + 1}</b>.
 					{post.title},
-					{new Date(post.created).toLocaleDateString()}
+					<b
+						>{new Date(post.created).getTime() == post.created
+							? 'сегодня'
+							: new Date(post.created).toLocaleDateString()}</b
+					>
 					{post.user?.name ? ', автор: ' : ''}<b>{post.user?.name}</b>
 					<button class="btn btn-sm btn-light text-dark" onclick={() => (selectedPost = uid)}>
 						<span>комментарии</span>
