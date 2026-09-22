@@ -9,7 +9,7 @@
 
 	let selectedPost = $state();
 	let newPost = $state<IPost>(Post());
-	let posts = $state<[string, IPost][]>();
+	let posts = $state<Record<string, IPost>>({});
 
 	let newComment = $state<IComment>(Comment());
 
@@ -17,7 +17,7 @@
 
 	onMount(async () => {
 		onValue(ref(db, '/posts'), (p) => {
-			if (p.exists()) posts = Object.entries(p.val()) as [string, IPost][];
+			if (p.exists()) posts = p.val();
 		});
 	});
 </script>
@@ -52,7 +52,7 @@
 	<div>
 		<h4>Список постов:</h4>
 		<div class="d-flex flex-column gap-1">
-			{#each posts as [uid, post], i}
+			{#each Object.entries(posts) as [uid, post], i}
 				<div class="d-flex align-posts-center gap-1">
 					<b>{i + 1}</b>.
 					{post.title},
