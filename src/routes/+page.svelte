@@ -52,8 +52,8 @@
 	<div>
 		<h4>Список постов:</h4>
 		<div class="d-flex flex-column gap-1">
-			{#each Object.entries(posts) as [uid, post], i}
-				<div class="d-flex align-posts-center gap-1">
+			{#each Object.entries(posts).sort((a, b) => a[1].created - b[1].created) as [uid, post], i}
+				<div class="d-flex align-items-center gap-1">
 					<b>{i + 1}</b>.
 					{post.title},
 					{new Date(post.created).toLocaleDateString()}
@@ -67,16 +67,18 @@
 					<button
 						class="btn btn-sm btn-light text-dark"
 						onclick={() => {
-							let l = post.likes
-								? Object.entries(post.likes).find((l) => l[1].userUid == data.user?.uid)
-								: undefined;
-							if (l) {
-								remove(ref(db, `/posts/${uid}/likes/${l[0]}`));
-							} else {
-								let newLike = Like();
-								newLike.userUid = data.user?.uid;
-								newLike.userName = data.user?.name;
-								push(ref(db, `/posts/${uid}/likes`), newLike);
+							if (data.user) {
+								let l = post.likes
+									? Object.entries(post.likes).find((l) => l[1].userUid == data.user?.uid)
+									: undefined;
+								if (l) {
+									remove(ref(db, `/posts/${uid}/likes/${l[0]}`));
+								} else {
+									let newLike = Like();
+									newLike.userUid = data.user?.uid;
+									newLike.userName = data.user?.name;
+									push(ref(db, `/posts/${uid}/likes`), newLike);
+								}
 							}
 						}}
 					>
@@ -87,7 +89,7 @@
 					</button>
 				</div>
 				{#if selectedPost === uid}
-					<div class="d-flex flex-column gap-1 bg-light rounded-1 ms-5 p-2 w-50">
+					<div class="d-flex flex-column gap-1 bg-light rounded-1 ms-4 p-2 w-50">
 						{#if post.comments}
 							{#each Object.entries(post.comments) as [u, com], j}
 								<div>
@@ -114,7 +116,6 @@
 											push(ref(db, `/posts/${uid}/comments`), newComment).then(
 												(_) => (newComment = Comment())
 											);
-											//push(ref(db, '/comments'), newComment).then((_) => (newComment = Comment()));
 										}
 									}}>Добавить</button
 								>
