@@ -18,6 +18,7 @@
 		</a>
 		<div class="flex-grow-1 d-flex justify-content-end gap-1">
 			<a class="btn btn-sm btn-light text-dark" href="/">Главная</a>
+			<a class="btn btn-sm btn-light text-dark" href="/video">Видео</a>
 			{#if !data.user}
 				<button
 					class="btn btn-sm btn-dark text-light"
