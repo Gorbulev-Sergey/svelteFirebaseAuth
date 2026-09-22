@@ -11,7 +11,7 @@ export const actions: Actions = {
 		const uid = formData.get('uid') as string;
 		const role = formData.get('role') as string | null;
 
-		console.log('Мои данные: ', uid, role);
+		//console.log('Мои данные: ', uid, role);
 		if (!uid) throw new Error('Missing uid');
 
 		try {

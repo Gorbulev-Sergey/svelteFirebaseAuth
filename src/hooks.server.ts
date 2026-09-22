@@ -12,7 +12,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 			const picture = (decoded as any).picture;
 			const role = (decoded as any).role || 'user';
 
-			console.log(decoded);
+			//console.log(decoded);
 
 			event.locals.user = {
 				uid: decoded.uid,

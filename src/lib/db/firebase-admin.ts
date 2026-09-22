@@ -21,12 +21,3 @@ const app = initAdmin();
 
 export const adminAuth = getAuth(app);
 export const adminDb = getDatabase(app);
-
-export async function setUserRole(uid: string, role: 'admin' | 'editor' | null) {
-	if (role === null) {
-		// Убираем claim: передаём объект без поля role
-		await adminAuth.setCustomUserClaims(uid, {});
-		return;
-	}
-	await adminAuth.setCustomUserClaims(uid, { role });
-}
